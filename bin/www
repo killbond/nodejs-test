@@ -92,10 +92,8 @@ io.on('connection', function (socket) {
     }
 
     socket.on('connected', function (data) {
-        console.log('___________________________________');
         for(var usr in users)
         {
-            console.log(usr + ':' + users[usr]);
             if(usr === data.sid)
             {
                 users[data.sid] = false;
@@ -118,10 +116,8 @@ io.on('connection', function (socket) {
     socket.on('prepare', function (data, callback) {
         if(!users[data.sid]) return;
 
-        console.log('___________________________________');
         for(var usr in users)
         {
-            console.log(usr + ':' + users[usr]);
             if(users[usr] === true)
             {
                 users[usr] = false;
