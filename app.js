@@ -4,7 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//var session = require ('express-session');
+var session = require ('express-session');
+var nconf = require('nconf');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -57,9 +58,12 @@ app.use(function(err, req, res, next) {
     });
 });
 
+nconf.argv()
+    .env()
+    .file({ file: 'config/' + app.get('env') + '.json' });
 
 module.exports = app;
 
-app.listen(3000, function () {
-    console.log("express has started on port 3000");
+app.listen(nconf.get('port'), function () {
+    console.log("express has started on port " + nconf.get('port'));
 });
