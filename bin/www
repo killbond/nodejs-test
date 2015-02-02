@@ -14,7 +14,7 @@ var http = require('http');
  */
 
 var port = nconf.get('port');
-app.set('port', 80);
+app.set('port', port);
 
 /**
  * Create HTTP server.
