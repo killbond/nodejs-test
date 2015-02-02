@@ -31,4 +31,5 @@ node_modules
 # PhpStorm .idea
 .idea
 
-
+# frontend vendor
+public/vendor
