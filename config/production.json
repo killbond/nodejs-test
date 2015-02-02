@@ -1,6 +1,7 @@
 {
     "port": 80,
     "session": {
-        "secret": "J4e2CTfjxiuCFhDQEtszS6ggz1f7QbcyurPbcR5e"
+        "secret": "J4e2CTfjxiuCFhDQEtszS6ggz1f7QbcyurPbcR5e",
+        "algorithm": "sha1"
     }
 }

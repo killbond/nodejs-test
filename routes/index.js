@@ -1,5 +1,6 @@
 var express = require('express');
 var session = require ('express-session');
+var crypto = require('crypto');
 var router = express.Router();
 
 /* GET home page. */
@@ -9,7 +10,8 @@ router.get('/', function(req, res, next) {
         res.redirect('/login');
     } else {
         res.render('index.ejs', {
-            name: req.session.email
+            name: req.session.email,
+            sessionId: req.session.sid
         });
     }
 });
@@ -30,6 +32,9 @@ router.get('/logout',function(req,res){
 
 router.post('/login',function(req,res){
     req.session.email = req.body.email;
+    req.session.sid = crypto.createHmac(nconf.get('session:algorithm'), nconf.get('session:secret'))
+        .update(req.body.email + (new Date()).getMilliseconds())
+        .digest('hex');
     res.redirect('/');
 });
 

@@ -1,6 +1,7 @@
 {
     "port": 3000,
     "session": {
-        "secret": "PkLffMtCfz4d1FRchKCDvUOYJ0ZtNcTbnA4nQGET"
+        "secret": "PkLffMtCfz4d1FRchKCDvUOYJ0ZtNcTbnA4nQGET",
+        "algorithm": "sha1"
     }
 }
