@@ -71,73 +71,16 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-var order = null,
-    status = null,
-    users = {},
-    statuses = ["new", "prepared"];
-
-function find(array, value) {
-    for(var i=0; i<array.length; i++) {
-        if (array[i] == value) return i;
-    }
-    return -1;
-}
-
 
 io.on('connection', function (socket) {
 
-    if(order === null){
-        order++;
-        status = statuses[0];
-    }
-
     socket.on('connected', function (data) {
-        for(var usr in users)
-        {
-            if(usr === data.sid)
-            {
-                users[data.sid] = false;
-            }
-        }
-
-        if(users[data.sid] !== false)
-        {
-            users[data.sid] = true;
-        }
-
-        data = {
-            ord: order,
-            status: status
-        };
-        data[data.sid] = users[data.sid];
-        socket.emit("new", data);
+        socket.emit("connected", data);
     });
 
-    socket.on('prepare', function (data, callback) {
-        if(!users[data.sid]) return;
-
-        for(var usr in users)
-        {
-            if(users[usr] === true)
-            {
-                users[usr] = false;
-            }
-            else
-            {
-                users[usr] = true;
-            }
-        }
-
-        var i = find(statuses, data.status);
-        if(typeof statuses[i+1] !== "undefined") {
-            data.status = statuses[i+1];
-        } else {
-            order++;
-            data.ord = order;
-            data.status = statuses[0];
-        }
-        data[data.sid] = users[data.sid];
-        socket.broadcast.emit("new", data);
+    socket.on('message', function (data, callback) {
+        console.log(data);
+        socket.broadcast.emit("message", data);
         callback(data);
     });
 });

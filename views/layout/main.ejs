@@ -57,14 +57,6 @@
 <!-- Page Content -->
 <div class="container">
 
-    <!-- Page Heading -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Orders processing</h1>
-        </div>
-    </div>
-    <!-- /.row -->
-
     <%- body -%>
 
     <!-- Footer -->
@@ -86,26 +78,34 @@
 <script src="/js/socket.io.js"></script>
 <script>
     var socket = io.connect(),
-        sid = "<%= sessionId %>";
+        sid = "<%= name %>";
 
-    socket.on('new', function (data) {
-        $("#number").html(data.ord);
-        $("#status").html(data.status);
-        $("#status").css({color: 'red'}).stop(true, true).animate({ color: '#337ab7'},400);
-        $("div.process").css({backgroundColor: '#fcf8e3'}).stop(true, true).animate({ backgroundColor: '#eee'},400);
+    socket.on('connected', function (data) {
+        $("#new_one").html(data.author + " joined")
+                .css({color: '#31708f'}).stop(true, true).animate({ color: '#fff'}, 1200);
     });
 
-    $("#process").click(function(e) {
-            socket.emit('prepare', {status: $("#status").html(), ord: $("#number").html(), sid: sid}, function (data) {
-                $("#number").html(data.ord);
-                $("#status").html(data.status);
-                $("#status").css({color: 'red'}).stop(true, true).animate({ color: '#337ab7'},400);
-                $("div.process").css({backgroundColor: '#fcf8e3'}).stop(true, true).animate({ backgroundColor: '#eee'},400);
-            });
+    $("form").submit(function(e) {
+        socket.emit('message', { text:  $(this).find("input[name=message]").val(), author: sid }, function (data) {
+            $("#messages").prepend(
+                    '<div class="row"><div class="col-md-2 text-right"><b>'+data.author+
+                    '</b>:</div><div class="col-md-6">'+data.text+
+                    '</div><div class="col-md-3 text-right">'+(new Date()).toLocaleTimeString()+'</div></div><hr/>');
+            $("#messages").find(".row").first().css({backgroundColor: '#fcf8e3'}).stop(true, true).animate({ backgroundColor: '#fff'}, 2000);
+            $("form input[name=message]").val("");
+        });
         e.preventDefault();
     });
 
-    socket.emit("connected", { sid: sid });
+    socket.on('message', function (data) {
+        $("#messages").prepend(
+                '<div class="row"><div class="col-md-2"><b>'+data.author+
+                '</b>:</div><div class="col-md-6">'+data.text+
+                '</div><div class="col-md-3">'+(new Date()).toLocaleTimeString()+'</div></div><hr/>');
+        $("#messages").find(".row").first().css({backgroundColor: '#fcf8e3'}).stop(true, true).animate({ backgroundColor: '#fff'}, 2000);
+    });
+
+    socket.emit("connected", { author: sid });
 </script>
 
 <!-- Bootstrap Core JavaScript -->
