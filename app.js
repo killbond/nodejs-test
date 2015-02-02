@@ -1,23 +1,33 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require ('express-session');
-var nconf = require('nconf');
+var engine = require('ejs-locals');
+
+nconf = require('nconf');
+
+var app = express();
+
+nconf.argv()
+    .env()
+    .file({ file: 'config/' + app.get('env') + '.json' });
+
+app.use(session({
+    secret: nconf.get('session:secret'),
+    saveUninitialized: false,
+    resave: false
+}));
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
-
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.engine('ejs', engine);
+app.set('views',__dirname + '/views');
+app.set('view engine', 'ejs'); // so you can render('index')
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -58,12 +68,4 @@ app.use(function(err, req, res, next) {
     });
 });
 
-nconf.argv()
-    .env()
-    .file({ file: 'config/' + app.get('env') + '.json' });
-
 module.exports = app;
-
-app.listen(nconf.get('port'), function () {
-    console.log("express has started on port " + nconf.get('port'));
-});

@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<% layout('/layout/main') -%>
+
+<div class="row">
+    <div class="col-md-7">
+        <a href="#">
+            <img class="img-responsive" src="http://placehold.it/700x300" alt="">
+        </a>
+    </div>
+    <div class="col-md-5">
+        <h1>Hello world!</h1>
+        <h4>Subheading</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
+        <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+</div>

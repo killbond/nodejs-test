@@ -1,3 +1,6 @@
 {
-    "port": 80
+    "port": 80,
+    "session": {
+        "secret": "J4e2CTfjxiuCFhDQEtszS6ggz1f7QbcyurPbcR5e"
+    }
 }
