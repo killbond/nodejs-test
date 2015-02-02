@@ -22,3 +22,9 @@ and then
 ```sh
 $ bower install
 ```
+
+### Running Application
+
+```sh
+$ node bin/www
+```
