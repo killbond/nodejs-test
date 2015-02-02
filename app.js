@@ -12,7 +12,7 @@ var app = express();
 
 nconf.argv()
     .env()
-    .file({ file: 'config/' + app.get('env') + '.json' });
+    .file({ file: path.join(__dirname,'/config/' + app.get('env') + '.json') });
 
 app.use(session({
     secret: nconf.get('session:secret'),

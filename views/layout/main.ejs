@@ -91,16 +91,16 @@
     socket.on('new', function (data) {
         $("#number").html(data.ord);
         $("#status").html(data.status);
-        $("#status").css({color: 'red'}).animate({ color: '#337ab7'},2000);
-        $("div.process").css({backgroundColor: '#fcf8e3'}).animate({ backgroundColor: '#eee'},2000);
+        $("#status").css({color: 'red'}).stop(true, true).animate({ color: '#337ab7'},400);
+        $("div.process").css({backgroundColor: '#fcf8e3'}).stop(true, true).animate({ backgroundColor: '#eee'},400);
     });
 
     $("#process").click(function(e) {
             socket.emit('prepare', {status: $("#status").html(), ord: $("#number").html(), sid: sid}, function (data) {
                 $("#number").html(data.ord);
                 $("#status").html(data.status);
-                $("#status").css({color: 'red'}).animate({ color: '#337ab7'},2000);
-                $("div.process").css({backgroundColor: '#fcf8e3'}).animate({ backgroundColor: '#eee'},2000);
+                $("#status").css({color: 'red'}).stop(true, true).animate({ color: '#337ab7'},400);
+                $("div.process").css({backgroundColor: '#fcf8e3'}).stop(true, true).animate({ backgroundColor: '#eee'},400);
             });
         e.preventDefault();
     });
