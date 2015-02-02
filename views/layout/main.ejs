@@ -99,9 +99,9 @@
 
     socket.on('message', function (data) {
         $("#messages").prepend(
-                '<div class="row"><div class="col-md-2"><b>'+data.author+
+                '<div class="row"><div class="col-md-2 text-right"><b>'+data.author+
                 '</b>:</div><div class="col-md-6">'+data.text+
-                '</div><div class="col-md-3">'+(new Date()).toLocaleTimeString()+'</div></div><hr/>');
+                '</div><div class="col-md-3 text-right">'+(new Date()).toLocaleTimeString()+'</div></div><hr/>');
         $("#messages").find(".row").first().css({backgroundColor: '#fcf8e3'}).stop(true, true).animate({ backgroundColor: '#fff'}, 2000);
     });
 
